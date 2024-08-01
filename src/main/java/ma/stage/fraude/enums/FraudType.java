@@ -1,7 +1,6 @@
 package ma.stage.fraude.enums;
 
 public enum FraudType {
-    CREDIT_CARD_FRAUD, // Fraude par carte de crédit
     ACCOUNT_TAKEOVER, // Prise de contrôle de compte
     IDENTITY_THEFT, // Usurpation d'identité
     PHISHING, // Phishing

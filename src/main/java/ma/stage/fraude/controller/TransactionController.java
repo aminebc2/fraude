@@ -1,5 +1,6 @@
 package ma.stage.fraude.controller;
 
+import lombok.AllArgsConstructor;
 import ma.stage.fraude.entities.Transaction;
 import ma.stage.fraude.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/transactions")
+@AllArgsConstructor
 public class TransactionController {
 
-    @Autowired
     private TransactionService transactionService;
 
     @GetMapping
