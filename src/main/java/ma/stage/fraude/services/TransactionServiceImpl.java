@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -55,17 +54,19 @@ public class TransactionServiceImpl implements TransactionService {
     public double getAverageTransactionAmount() {
         return transactionRepository.findAll()
                 .stream()
-                .collect(Collectors.averagingDouble(Transaction::getAmount));
+                .mapToDouble(Transaction::getAmount)
+                .average()
+                .orElse(0.0);
     }
 
     @Override
     public List<Transaction> getSuspectTransactions() {
-        return transactionRepository.findByStatus(Tstatus.SUSPECT);
+        return List.of();
     }
 
     @Override
     public List<Transaction> getFraudulentTransactions() {
-        return transactionRepository.findByStatus(Tstatus.FRAUDULENT);
+        return List.of();
     }
 
     @Override

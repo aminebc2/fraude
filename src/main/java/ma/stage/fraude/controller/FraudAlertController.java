@@ -1,4 +1,4 @@
-package ma.stage.fraude.controllers;
+package ma.stage.fraude.controller;
 
 import ma.stage.fraude.entities.FraudAlert;
 import ma.stage.fraude.enums.Fstatus;
