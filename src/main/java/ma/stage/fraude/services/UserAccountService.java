@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface UserAccountService {
     List<UserAccount> getAllUserAccounts();
-    UserAccount getUserAccountByaccountName(String accountName);
-    int getUserAccountCount();
-    UserAccount getUserAccountById(String accountId);
+    UserAccount getUserAccountById(String id);
+    UserAccount saveUserAccount(UserAccount userAccount);
+    double getTotalBalance();
+    double getAverageAccountAge();
+    double getAverageTransactionFrequency();
 }

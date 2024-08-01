@@ -1,19 +1,19 @@
-package ma.stage.fraude.controller;
+package ma.stage.fraude.controllers;
 
-import lombok.AllArgsConstructor;
 import ma.stage.fraude.entities.Transaction;
+import ma.stage.fraude.entities.UserAccount;
+import ma.stage.fraude.enums.Tstatus;
 import ma.stage.fraude.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/transactions")
-@AllArgsConstructor
+@RequestMapping("/api/transactions")
 public class TransactionController {
 
+    @Autowired
     private TransactionService transactionService;
 
     @GetMapping
@@ -22,9 +22,39 @@ public class TransactionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Transaction> getTransactionById(@PathVariable String id) {
-        Transaction transaction = transactionService.getTransactionById(id);
-        return transaction != null ? ResponseEntity.ok(transaction) : ResponseEntity.notFound().build();
+    public Transaction getTransactionById(@PathVariable String id) {
+        return transactionService.getTransactionById(id);
     }
 
+    @GetMapping("/userAccount/{accountId}")
+    public List<Transaction> getTransactionsByUserAccount(@PathVariable String accountId) {
+        UserAccount userAccount = new UserAccount();
+        userAccount.setAccountId(accountId);
+        return transactionService.getTransactionsByUserAccount(userAccount);
+    }
+
+    @PostMapping
+    public Transaction saveTransaction(@RequestBody Transaction transaction) {
+        return transactionService.saveTransaction(transaction);
+    }
+
+    @GetMapping("/amount/total")
+    public double getTotalTransactionAmount() {
+        return transactionService.getTotalTransactionAmount();
+    }
+
+    @GetMapping("/count")
+    public long getTotalTransactionCount() {
+        return transactionService.getTotalTransactionCount();
+    }
+
+    @GetMapping("/amount/average")
+    public double getAverageTransactionAmount() {
+        return transactionService.getAverageTransactionAmount();
+    }
+
+    @GetMapping("/status/{status}")
+    public List<Transaction> getTransactionsByStatus(@PathVariable Tstatus status) {
+        return transactionService.getTransactionsByStatus(status);
+    }
 }

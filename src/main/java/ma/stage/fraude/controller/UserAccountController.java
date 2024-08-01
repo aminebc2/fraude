@@ -1,15 +1,14 @@
-package ma.stage.fraude.controller;
+package ma.stage.fraude.controllers;
 
 import ma.stage.fraude.entities.UserAccount;
 import ma.stage.fraude.services.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/user-accounts")
+@RequestMapping("/api/userAccounts")
 public class UserAccountController {
 
     @Autowired
@@ -21,9 +20,27 @@ public class UserAccountController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserAccount> getUserAccountByaccountName(@PathVariable String accountName) {
-        UserAccount userAccount = userAccountService.getUserAccountByaccountName(accountName);
-        return userAccount != null ? ResponseEntity.ok(userAccount) : ResponseEntity.notFound().build();
+    public UserAccount getUserAccountById(@PathVariable String id) {
+        return userAccountService.getUserAccountById(id);
     }
 
+    @PostMapping
+    public UserAccount saveUserAccount(@RequestBody UserAccount userAccount) {
+        return userAccountService.saveUserAccount(userAccount);
+    }
+
+    @GetMapping("/balance/total")
+    public double getTotalBalance() {
+        return userAccountService.getTotalBalance();
+    }
+
+    @GetMapping("/age/average")
+    public double getAverageAccountAge() {
+        return userAccountService.getAverageAccountAge();
+    }
+
+    @GetMapping("/frequency/average")
+    public double getAverageTransactionFrequency() {
+        return userAccountService.getAverageTransactionFrequency();
+    }
 }
