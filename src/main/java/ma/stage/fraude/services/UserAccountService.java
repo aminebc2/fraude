@@ -7,4 +7,6 @@ import java.util.List;
 public interface UserAccountService {
     List<UserAccount> getAllUserAccounts();
     UserAccount getUserAccountByaccountName(String accountName);
+    int getUserAccountCount();
+    UserAccount getUserAccountById(String accountId);
 }
