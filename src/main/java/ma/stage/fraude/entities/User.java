@@ -15,7 +15,9 @@ import ma.stage.fraude.enums.Roles;
 @Builder
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String userId;
+
     private String username;
     private String password;
 

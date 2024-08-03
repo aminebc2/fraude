@@ -1,4 +1,5 @@
 package ma.stage.fraude.entities;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "user_accounts")
+@Table(name = "clients")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +21,7 @@ public class UserAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String accountId;
+
     private String accountName;
 
     @Enumerated(EnumType.STRING)

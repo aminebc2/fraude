@@ -17,7 +17,9 @@ import java.util.Date;
 @Builder
 public class Transaction {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String transactionId;
+
     private Date date;
     private double amount;
 

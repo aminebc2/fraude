@@ -10,14 +10,16 @@ import ma.stage.fraude.enums.Action;
 import java.util.Date;
 
 @Entity
-@Table(name = "audit_logs")
+@Table(name = "logs")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class AuditLog {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String logId;
+
     private String userId;
 
     @Enumerated(EnumType.STRING)

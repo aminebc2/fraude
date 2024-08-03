@@ -17,8 +17,10 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class FraudAlert {
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String alertId;
+
     private String transactionId;
     private Date alertDate;
 
@@ -29,4 +31,3 @@ public class FraudAlert {
     private Fstatus status;
     private String comments;
 }
-
