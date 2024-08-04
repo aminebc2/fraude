@@ -82,8 +82,8 @@ public class DataService {
     @PostConstruct
     public void generateData() {
         generateUsers(6);
-        generateAccounts(10);
-        generateTransactions(50);
+        generateAccounts(20);
+        generateTransactions(100);
         generateFraudAlerts(20);
         generateAuditLogs(30);
     }

@@ -16,6 +16,7 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { FraudAlertsComponent } from './fraud-alerts/fraud-alerts.component';
 import { ClientsComponent } from './clients/clients.component';
 import { LogsComponent } from './logs/logs.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { LogsComponent } from './logs/logs.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     AuditLogService,
