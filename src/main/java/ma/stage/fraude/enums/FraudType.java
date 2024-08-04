@@ -3,7 +3,6 @@ package ma.stage.fraude.enums;
 public enum FraudType {
     ACCOUNT_TAKEOVER, // Prise de contrôle de compte
     IDENTITY_THEFT, // Usurpation d'identité
-    PHISHING, // Phishing
     INTERNAL_FRAUD, // Fraude interne
     CHECK_FRAUD, // Fraude par chèque
     LOAN_FRAUD, // Fraude au prêt

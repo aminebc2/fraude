@@ -26,5 +26,4 @@ public class AuditLog {
     private Action action;
 
     private Date timestamp;
-    private String details;
 }

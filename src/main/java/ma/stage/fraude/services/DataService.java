@@ -57,7 +57,7 @@ public class DataService {
 
     // Exemples de commentaires et détails
     private String[] commentairesFraude = {
-            "Transaction suspecte détectée à l'étranger",
+            "TransactionModel suspecte détectée à l'étranger",
             "Montant élevé retiré en une seule opération",
             "Multiples tentatives de connexion échouées",
             "Changement soudain de l'adresse IP",
@@ -65,41 +65,17 @@ public class DataService {
             "Tentative de retrait non autorisée",
             "Paiement récurrent non reconnu par le titulaire",
             "Utilisation de la carte dans un endroit inhabituel",
-            "Transaction avec une devise étrangère non courante",
+            "TransactionModel avec une devise étrangère non courante",
             "Utilisation de la carte après un signalement de perte",
             "Suspicion de vol d'identité suite à une plainte",
             "Multiples transactions en peu de temps",
             "Montant inhabituel par rapport aux habitudes du client",
             "Activité suspecte détectée à partir de multiples localisations",
             "Tentative de modification des informations de compte",
-            "Transaction effectuée hors du pays de résidence",
+            "TransactionModel effectuée hors du pays de résidence",
             "Tentative de connexion à partir d'un appareil inconnu",
             "Retrait important après un dépôt anormal",
             "Utilisation excessive de la carte dans une courte période",
-            "-"
-    };
-
-    private String[] detailsAudit = {
-            "Utilisateur connecté à partir d'une nouvelle adresse IP",
-            "Tentative de connexion échouée à cause d'un mot de passe incorrect",
-            "Mise à jour des informations du compte",
-            "Modification des paramètres de sécurité",
-            "Création d'un nouveau compte utilisateur",
-            "Suppression d'un compte utilisateur",
-            "Modification des droits d'accès utilisateur",
-            "Tentative de connexion à partir d'un emplacement inhabituel",
-            "Accès non autorisé détecté",
-            "Modification de l'adresse email du compte",
-            "Réinitialisation du mot de passe",
-            "Téléchargement suspect de données",
-            "Accès répété à des informations sensibles",
-            "Tentative de suppression de journaux de sécurité",
-            "Modification des paramètres de notification",
-            "Activation de la vérification en deux étapes",
-            "Désactivation de la vérification en deux étapes",
-            "Tentative de connexion après heures de bureau",
-            "Consultation de données hors des heures de travail",
-            "Multiples tentatives de modification de mot de passe",
             "-"
     };
 
@@ -177,7 +153,6 @@ public class DataService {
                     .userId(UUID.randomUUID().toString()) // Replace with actual userId from User entities if necessary
                     .action(Action.values()[faker.random().nextInt(Action.values().length)])
                     .timestamp(faker.date().past(365, TimeUnit.DAYS))
-                    .details(generateAuditDetail())
                     .build();
             auditLogRepository.save(log);
         }
@@ -193,9 +168,5 @@ public class DataService {
 
     private String generateFraudComment() {
         return commentairesFraude[faker.random().nextInt(commentairesFraude.length)];
-    }
-
-    private String generateAuditDetail() {
-        return detailsAudit[faker.random().nextInt(detailsAudit.length)];
     }
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/userAccounts")
+@CrossOrigin("*")
 public class UserAccountController {
 
     @Autowired
