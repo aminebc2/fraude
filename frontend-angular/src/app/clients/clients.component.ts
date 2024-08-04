@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserAccountService } from '../services/user-account.service';
+import { TransactionService } from '../services/transaction.service';
 import { UserAccount } from '../models/user-account.model';
 import * as XLSX from 'xlsx';
 
@@ -21,9 +22,12 @@ export class ClientsComponent implements OnInit {
   sortKey: keyof UserAccount = 'accountId';
   sortOrder: string = 'asc'; // or 'desc'
   dropdowns: { [key: string]: boolean } = {};
+  isFilterDropdownOpen: boolean = false;
 
-
-  constructor(private userAccountService: UserAccountService) {}
+  constructor(
+    private userAccountService: UserAccountService,
+    private transactionService: TransactionService
+  ) {}
 
   ngOnInit(): void {
     this.loadAccounts();
@@ -33,6 +37,13 @@ export class ClientsComponent implements OnInit {
     this.userAccountService.getAllUserAccounts().subscribe((data) => {
       this.accounts = data;
       this.totalAccounts = data.length;
+
+      data.forEach(account => {
+        this.transactionService.getTransactionsByUserAccount(account.accountId).subscribe(transactions => {
+          account.numberOfTransactions = transactions.length;
+        });
+      });
+
       this.filteredAccounts = this.accounts;
       this.updatePagination();
     });
@@ -52,8 +63,8 @@ export class ClientsComponent implements OnInit {
     this.sortKey = key;
     this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
     this.filteredAccounts.sort((a, b) => {
-      const aValue = a[key];
-      const bValue = b[key];
+      const aValue = a[key] ?? '';
+      const bValue = b[key] ?? '';
       if (aValue < bValue) {
         return this.sortOrder === 'asc' ? -1 : 1;
       } else if (aValue > bValue) {
@@ -92,6 +103,7 @@ export class ClientsComponent implements OnInit {
       this.updatePagination();
     }
   }
+
   toggleDropdown(accountId: string): void {
     this.dropdowns[accountId] = !this.dropdowns[accountId];
   }
@@ -99,6 +111,7 @@ export class ClientsComponent implements OnInit {
   viewDetails(account: UserAccount): void {
     // Implement the logic to view account details
   }
+
   openTransactions(accountId: string): void {
     // Implement the logic to open the transaction modal or navigate to the transaction page
   }
@@ -110,5 +123,9 @@ export class ClientsComponent implements OnInit {
       SheetNames: ['accounts']
     };
     XLSX.writeFile(workbook, 'accounts.xlsx');
+  }
+
+  toggleFilterDropdown(): void {
+    this.isFilterDropdownOpen = !this.isFilterDropdownOpen;
   }
 }

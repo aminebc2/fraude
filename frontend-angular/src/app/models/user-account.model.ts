@@ -9,4 +9,5 @@ export class UserAccount {
   accountAge: number = 0;
   transactionFrequency: number = 0;
   transactions: Transaction[] = [];
+  numberOfTransactions?: number;
 }
