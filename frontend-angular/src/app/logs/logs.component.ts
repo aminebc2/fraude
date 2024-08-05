@@ -45,6 +45,7 @@ export class LogsComponent implements OnInit {
     this.updatePagination();
   }
 
+
   formatDate(timestamp: Date): string {
     const date = new Date(timestamp);
     return date.toLocaleString();
@@ -80,16 +81,16 @@ export class LogsComponent implements OnInit {
   }
 
   exportLogs(): void {
+    const date = new Date().toLocaleDateString();
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.logs);
     const workbook: XLSX.WorkBook = {
       Sheets: { 'logs': worksheet },
       SheetNames: ['logs']
     };
-    XLSX.writeFile(workbook, 'logs.xlsx');
+    XLSX.writeFile(workbook, 'logs'+date+'.xlsx');
   }
 
   getUserEmail(userId: string): string {
-    // Implement the logic to get user email by user ID
-    return 'user@example.com'; // Placeholder
+    return 'user@example.com';
   }
 }

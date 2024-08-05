@@ -51,7 +51,8 @@ export class ClientsComponent implements OnInit {
 
   filterAccounts(): void {
     this.filteredAccounts = this.accounts.filter(account => {
-      const matchesSearchTerm = account.accountName.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchesSearchTerm = account.accountId.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        account.accountName.toLowerCase().includes(this.searchTerm.toLowerCase());
       const matchesType = this.accountTypeFilter ? account.accountType === this.accountTypeFilter : true;
       const matchesBalance = account.balance <= this.balanceRange;
       return matchesSearchTerm && matchesType && matchesBalance;
@@ -113,12 +114,13 @@ export class ClientsComponent implements OnInit {
   }
 
   exportAccounts(): void {
+    const date = new Date().toDateString();
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.accounts);
     const workbook: XLSX.WorkBook = {
       Sheets: { 'accounts': worksheet },
       SheetNames: ['accounts']
     };
-    XLSX.writeFile(workbook, 'accounts.xlsx');
+    XLSX.writeFile(workbook, 'accounts' + date + '.xlsx');
   }
 
   toggleFilterDropdown(): void {
