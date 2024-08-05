@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { UserAccountService } from '../services/user-account.service';
 import { TransactionService } from '../services/transaction.service';
 import { UserAccount } from '../models/user-account.model';
@@ -112,10 +112,6 @@ export class ClientsComponent implements OnInit {
     // Implement the logic to view account details
   }
 
-  openTransactions(accountId: string): void {
-    // Implement the logic to open the transaction modal or navigate to the transaction page
-  }
-
   exportAccounts(): void {
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.accounts);
     const workbook: XLSX.WorkBook = {
@@ -127,5 +123,28 @@ export class ClientsComponent implements OnInit {
 
   toggleFilterDropdown(): void {
     this.isFilterDropdownOpen = !this.isFilterDropdownOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    if (!event.target || !(event.target instanceof HTMLElement)) {
+      return;
+    }
+
+    const filterDropdownButton = document.getElementById('filterDropdownButton');
+    const filterDropdown = document.getElementById('filterDropdown');
+
+    if (filterDropdownButton && filterDropdown && !filterDropdownButton.contains(event.target) && !filterDropdown.contains(event.target)) {
+      this.isFilterDropdownOpen = false;
+    }
+
+    for (const accountId in this.dropdowns) {
+      const dropdownButton = document.getElementById(`dropdownButton-${accountId}`);
+      const dropdownMenu = document.getElementById(`dropdownMenu-${accountId}`);
+
+      if (dropdownButton && dropdownMenu && !dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        this.dropdowns[accountId] = false;
+      }
+    }
   }
 }

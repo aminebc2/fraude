@@ -12,8 +12,7 @@ const routes: Routes = [
   { path: 'transaction', component: TransactionComponent, data: { breadcrumb: 'Transactions' } },
   { path: 'fraud', component: FraudAlertsComponent, data: { breadcrumb: 'Fraud Alerts' } },
   { path: 'logs', component: LogsComponent, data: { breadcrumb: 'Logs' } },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: '**', redirectTo: '/dashboard' }
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 ];
 
 @NgModule({

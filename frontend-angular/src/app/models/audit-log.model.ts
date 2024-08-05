@@ -3,5 +3,4 @@ export class AuditLog {
   userId: string = '';
   action: string = '';
   timestamp: Date = new Date();
-  details: string = '';
 }
