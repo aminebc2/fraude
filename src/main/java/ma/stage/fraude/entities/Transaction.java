@@ -5,9 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
+import ma.stage.fraude.enums.TransactionType;
 import ma.stage.fraude.enums.Tstatus;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name = "transactions")
@@ -28,6 +30,7 @@ public class Transaction {
     private UserAccount userAccount;
 
     @Enumerated(EnumType.STRING)
-    private Tstatus status;
+    private TransactionType transactionType;
     private String location;
+
 }

@@ -1,14 +1,13 @@
 package ma.stage.fraude.services;
 
 import ma.stage.fraude.entities.FraudAlert;
-import ma.stage.fraude.enums.Fstatus;
+import ma.stage.fraude.enums.Tstatus;
 import ma.stage.fraude.repositories.FraudAlertRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -38,27 +37,32 @@ public class FraudAlertServiceImpl implements FraudAlertService {
     }
 
     @Override
+    public FraudAlert updateFraudAlert(FraudAlert fraudAlert) {
+        return fraudAlertRepository.save(fraudAlert);
+    }
+
+    @Override
     public long getTotalFraudAlertsCount() {
         return fraudAlertRepository.count();
     }
 
     @Override
-    public long getPendingFraudAlertsCount() {
-        return fraudAlertRepository.findByStatus(Fstatus.PENDING).size();
+    public long getNormalFraudAlertsCount() {
+        return fraudAlertRepository.findByStatus(Tstatus.NORMAL).size();
     }
 
     @Override
-    public long getConfirmedFraudAlertsCount() {
-        return fraudAlertRepository.findByStatus(Fstatus.CONFIRMED).size();
+    public long getAnalysingFraudAlertsCount() {
+        return fraudAlertRepository.findByStatus(Tstatus.ANALYZING).size();
     }
 
     @Override
-    public long getRejectedFraudAlertsCount() {
-        return fraudAlertRepository.findByStatus(Fstatus.REJECTED).size();
+    public long getFraudAlertsCount() {
+        return fraudAlertRepository.findByStatus(Tstatus.FRAUDULENT).size();
     }
 
     @Override
-    public List<FraudAlert> getFraudAlertsByStatus(Fstatus status) {
+    public List<FraudAlert> getFraudAlertsByStatus(Tstatus status) {
         return fraudAlertRepository.findByStatus(status);
     }
 }

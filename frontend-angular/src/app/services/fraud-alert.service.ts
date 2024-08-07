@@ -27,20 +27,24 @@ export class FraudAlertService {
     return this.http.post<FraudAlert>(this.apiUrl, fraudAlert);
   }
 
+  updateFraudAlert(id: string, fraudAlert: FraudAlert): Observable<FraudAlert> {
+    return this.http.put<FraudAlert>(`${this.apiUrl}/${id}`, fraudAlert);
+  }
+
   getTotalFraudAlertsCount(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/count/total`);
   }
 
-  getPendingFraudAlertsCount(): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/count/pending`);
+  getNormalFraudAlertsCount(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/count/normals`);
   }
 
-  getConfirmedFraudAlertsCount(): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/count/confirmed`);
+  getAnalysedFraudAlertsCount(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/count/analisys`);
   }
 
-  getRejectedFraudAlertsCount(): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/count/rejected`);
+  getFraudFraudAlertsCount(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/count/frauds`);
   }
 
   getFraudAlertsByStatus(status: string): Observable<FraudAlert[]> {

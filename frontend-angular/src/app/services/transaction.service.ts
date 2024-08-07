@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Transaction } from '../models/transaction.model';
-import { UserAccount } from '../models/user-account.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +27,10 @@ export class TransactionService {
     return this.http.post<Transaction>(this.apiUrl, transaction);
   }
 
+  updateTransaction(id: string, transaction: Transaction): Observable<Transaction> {
+    return this.http.put<Transaction>(`${this.apiUrl}/${id}`, transaction);
+  }
+
   getTotalTransactionAmount(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/amount/total`);
   }
@@ -38,9 +41,5 @@ export class TransactionService {
 
   getAverageTransactionAmount(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/amount/average`);
-  }
-
-  getTransactionsByStatus(status: string): Observable<Transaction[]> {
-    return this.http.get<Transaction[]>(`${this.apiUrl}/status/${status}`);
   }
 }

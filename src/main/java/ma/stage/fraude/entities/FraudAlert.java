@@ -6,7 +6,7 @@ import lombok.Data;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import ma.stage.fraude.enums.FraudType;
-import ma.stage.fraude.enums.Fstatus;
+import ma.stage.fraude.enums.Tstatus;
 
 import java.util.Date;
 
@@ -28,6 +28,6 @@ public class FraudAlert {
     private FraudType fraudType;
 
     @Enumerated(EnumType.STRING)
-    private Fstatus status;
+    private Tstatus status;
     private String comments;
 }

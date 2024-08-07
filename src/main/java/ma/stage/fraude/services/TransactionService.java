@@ -2,7 +2,6 @@ package ma.stage.fraude.services;
 
 import ma.stage.fraude.entities.Transaction;
 import ma.stage.fraude.entities.UserAccount;
-import ma.stage.fraude.enums.Tstatus;
 
 import java.util.List;
 
@@ -11,10 +10,8 @@ public interface TransactionService {
     Transaction getTransactionById(String id);
     List<Transaction> getTransactionsByUserAccount(UserAccount userAccount);
     Transaction saveTransaction(Transaction transaction);
+    Transaction updateTransaction(Transaction transaction);
     double getTotalTransactionAmount();
     long getTotalTransactionCount();
     double getAverageTransactionAmount();
-    List<Transaction> getSuspectTransactions();
-    List<Transaction> getFraudulentTransactions();
-    List<Transaction> getTransactionsByStatus(Tstatus status);
 }

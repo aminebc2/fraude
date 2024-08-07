@@ -1,7 +1,7 @@
 package ma.stage.fraude.controller;
 
 import ma.stage.fraude.entities.FraudAlert;
-import ma.stage.fraude.enums.Fstatus;
+import ma.stage.fraude.enums.Tstatus;
 import ma.stage.fraude.services.FraudAlertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,28 +36,34 @@ public class FraudAlertController {
         return fraudAlertService.saveFraudAlert(fraudAlert);
     }
 
+    @PutMapping("/{id}")
+    public FraudAlert updateFraudAlert(@PathVariable String id, @RequestBody FraudAlert fraudAlert) {
+        fraudAlert.setAlertId(id);
+        return fraudAlertService.updateFraudAlert(fraudAlert);
+    }
+
     @GetMapping("/count/total")
     public long getTotalFraudAlertsCount() {
         return fraudAlertService.getTotalFraudAlertsCount();
     }
 
-    @GetMapping("/count/pending")
-    public long getPendingFraudAlertsCount() {
-        return fraudAlertService.getPendingFraudAlertsCount();
+    @GetMapping("/count/normals")
+    public long getNormalFraudAlertsCount() {
+        return fraudAlertService.getNormalFraudAlertsCount();
     }
 
-    @GetMapping("/count/confirmed")
-    public long getConfirmedFraudAlertsCount() {
-        return fraudAlertService.getConfirmedFraudAlertsCount();
+    @GetMapping("/count/analisys")
+    public long getAnalysingFraudAlertsCount() {
+        return fraudAlertService.getAnalysingFraudAlertsCount();
     }
 
-    @GetMapping("/count/rejected")
-    public long getRejectedFraudAlertsCount() {
-        return fraudAlertService.getRejectedFraudAlertsCount();
+    @GetMapping("/count/frauds")
+    public long getFraudAlertsCount() {
+        return fraudAlertService.getFraudAlertsCount();
     }
 
     @GetMapping("/status/{status}")
-    public List<FraudAlert> getFraudAlertsByStatus(@PathVariable Fstatus status) {
+    public List<FraudAlert> getFraudAlertsByStatus(@PathVariable Tstatus status) {
         return fraudAlertService.getFraudAlertsByStatus(status);
     }
 }

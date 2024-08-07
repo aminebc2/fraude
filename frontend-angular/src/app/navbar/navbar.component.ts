@@ -2,6 +2,7 @@ import {Component, OnInit, AfterViewInit, HostListener} from '@angular/core';
 import { interval } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FraudAlertService } from "../services/fraud-alert.service";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   location: string = "Rabat, Morocco";
   dateTime: string = "";
 
-  constructor(private fraudAlertService: FraudAlertService) { }
+  constructor(private fraudAlertService: FraudAlertService) {
+  }
 
   ngOnInit(): void {
     this.getPendingFraudAlertsCount();
@@ -31,7 +33,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   getPendingFraudAlertsCount(): void {
-    this.fraudAlertService.getPendingFraudAlertsCount().subscribe(count => {
+    this.fraudAlertService.getAnalysedFraudAlertsCount().subscribe(count => {
       this.pendingFraudAlertsCount = count;
     });
   }
@@ -56,5 +58,19 @@ export class NavbarComponent implements OnInit, AfterViewInit {
         dropdownMenuEl.classList.add('hidden');
       }
     }
+  }
+
+  notificationTemplate() {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-right",
+      timer: 5000,
+      timerProgressBar: true,
+      showConfirmButton: false
+    });
+    Toast.fire({
+      icon: "info",
+      title: "Vous n'avez aucun nouveau message !"
+    });
   }
 }

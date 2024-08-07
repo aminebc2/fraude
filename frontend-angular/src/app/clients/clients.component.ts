@@ -1,13 +1,20 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { UserAccountService } from '../services/user-account.service';
-import { TransactionService } from '../services/transaction.service';
 import { UserAccount } from '../models/user-account.model';
+import { TransactionService } from '../services/transaction.service';
 import * as XLSX from 'xlsx';
+import { DatePipe } from '@angular/common';
+import { Transaction } from '../models/transaction.model';
+
+interface TransactionCounts {
+  [key: string]: number;
+}
 
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.css']
+  styleUrls: ['./clients.component.css'],
+  providers: [DatePipe]
 })
 export class ClientsComponent implements OnInit {
   accounts: UserAccount[] = [];
@@ -26,7 +33,8 @@ export class ClientsComponent implements OnInit {
 
   constructor(
     private userAccountService: UserAccountService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -37,15 +45,28 @@ export class ClientsComponent implements OnInit {
     this.userAccountService.getAllUserAccounts().subscribe((data) => {
       this.accounts = data;
       this.totalAccounts = data.length;
+      this.filteredAccounts = this.accounts;
+      this.loadTransactions(); // Load transactions after accounts are loaded
+    });
+  }
 
-      data.forEach(account => {
-        this.transactionService.getTransactionsByUserAccount(account.accountId).subscribe(transactions => {
-          account.numberOfTransactions = transactions.length;
-        });
+  loadTransactions(): void {
+    this.transactionService.getAllTransactions().subscribe(transactions => {
+      const transactionCounts: TransactionCounts = transactions.reduce((acc: TransactionCounts, transaction) => {
+        const accountId = transaction.userAccount.accountId;
+        if (!acc[accountId]) {
+          acc[accountId] = 0;
+        }
+        acc[accountId]++;
+        return acc;
+      }, {});
+
+      this.accounts.forEach(account => {
+        account.numberOfTransactions = transactionCounts[account.accountId] || 0;
       });
 
-      this.filteredAccounts = this.accounts;
-      this.updatePagination();
+      this.filterAccounts(); // Apply filters after loading transactions
+      this.updatePagination(); // Update pagination after filtering
     });
   }
 
@@ -114,13 +135,13 @@ export class ClientsComponent implements OnInit {
   }
 
   exportAccounts(): void {
-    const date = new Date().toDateString();
+    const date = new Date().toLocaleDateString();
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.accounts);
     const workbook: XLSX.WorkBook = {
       Sheets: { 'accounts': worksheet },
       SheetNames: ['accounts']
     };
-    XLSX.writeFile(workbook, 'accounts' + date + '.xlsx');
+    XLSX.writeFile(workbook, 'accounts_' + date + '.xlsx');
   }
 
   toggleFilterDropdown(): void {
@@ -148,5 +169,9 @@ export class ClientsComponent implements OnInit {
         this.dropdowns[accountId] = false;
       }
     }
+  }
+
+  formatDate(date: string): string {
+    return <string>this.datePipe.transform(date, 'dd/MM/yyyy');
   }
 }

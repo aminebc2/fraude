@@ -2,7 +2,6 @@ package ma.stage.fraude.controller;
 
 import ma.stage.fraude.entities.Transaction;
 import ma.stage.fraude.entities.UserAccount;
-import ma.stage.fraude.enums.Tstatus;
 import ma.stage.fraude.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/transactions")
 @CrossOrigin("*")
-
 public class TransactionController {
 
     @Autowired
@@ -40,6 +38,12 @@ public class TransactionController {
         return transactionService.saveTransaction(transaction);
     }
 
+    @PutMapping("/{id}")
+    public Transaction updateTransaction(@PathVariable String id, @RequestBody Transaction transaction) {
+        transaction.setTransactionId(id);
+        return transactionService.updateTransaction(transaction);
+    }
+
     @GetMapping("/amount/total")
     public double getTotalTransactionAmount() {
         return transactionService.getTotalTransactionAmount();
@@ -53,10 +57,5 @@ public class TransactionController {
     @GetMapping("/amount/average")
     public double getAverageTransactionAmount() {
         return transactionService.getAverageTransactionAmount();
-    }
-
-    @GetMapping("/status/{status}")
-    public List<Transaction> getTransactionsByStatus(@PathVariable Tstatus status) {
-        return transactionService.getTransactionsByStatus(status);
     }
 }

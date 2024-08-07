@@ -2,7 +2,6 @@ package ma.stage.fraude.services;
 
 import ma.stage.fraude.entities.Transaction;
 import ma.stage.fraude.entities.UserAccount;
-import ma.stage.fraude.enums.Tstatus;
 import ma.stage.fraude.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +37,11 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    public Transaction updateTransaction(Transaction transaction) {
+        return transactionRepository.save(transaction);
+    }
+
+    @Override
     public double getTotalTransactionAmount() {
         return transactionRepository.findAll()
                 .stream()
@@ -57,20 +61,5 @@ public class TransactionServiceImpl implements TransactionService {
                 .mapToDouble(Transaction::getAmount)
                 .average()
                 .orElse(0.0);
-    }
-
-    @Override
-    public List<Transaction> getSuspectTransactions() {
-        return List.of();
-    }
-
-    @Override
-    public List<Transaction> getFraudulentTransactions() {
-        return List.of();
-    }
-
-    @Override
-    public List<Transaction> getTransactionsByStatus(Tstatus status) {
-        return transactionRepository.findByStatus(status);
     }
 }

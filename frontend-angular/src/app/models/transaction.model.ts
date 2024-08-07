@@ -5,6 +5,7 @@ export class Transaction {
   date: Date = new Date();
   amount: number = 0;
   userAccount: UserAccount = new UserAccount();
-  status: string = '';
+  transactionType: string = '';
   location: string = '';
 }
+

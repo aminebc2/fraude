@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -57,7 +56,7 @@ public class DataService {
 
     // Exemples de commentaires et détails
     private String[] commentairesFraude = {
-            "TransactionModel suspecte détectée à l'étranger",
+            "Transaction suspecte détectée à l'étranger",
             "Montant élevé retiré en une seule opération",
             "Multiples tentatives de connexion échouées",
             "Changement soudain de l'adresse IP",
@@ -65,14 +64,14 @@ public class DataService {
             "Tentative de retrait non autorisée",
             "Paiement récurrent non reconnu par le titulaire",
             "Utilisation de la carte dans un endroit inhabituel",
-            "TransactionModel avec une devise étrangère non courante",
+            "Transaction avec une devise étrangère non courante",
             "Utilisation de la carte après un signalement de perte",
             "Suspicion de vol d'identité suite à une plainte",
             "Multiples transactions en peu de temps",
             "Montant inhabituel par rapport aux habitudes du client",
             "Activité suspecte détectée à partir de multiples localisations",
             "Tentative de modification des informations de compte",
-            "TransactionModel effectuée hors du pays de résidence",
+            "Transaction effectuée hors du pays de résidence",
             "Tentative de connexion à partir d'un appareil inconnu",
             "Retrait important après un dépôt anormal",
             "Utilisation excessive de la carte dans une courte période",
@@ -81,21 +80,21 @@ public class DataService {
 
     @PostConstruct
     public void generateData() {
-        generateUsers(6);
-        generateAccounts(20);
-        generateTransactions(100);
-        generateFraudAlerts(20);
+        generateUsers(10);
+        generateAccounts(50);
+        generateTransactions(300);
+        generateFraudAlerts(100);
         generateAuditLogs(30);
     }
 
-
     private void generateUsers(int count) {
+        Roles[] roles = {Roles.ANALYST, Roles.SUPERVISOR};
         for (int i = 0; i < count; i++) {
             User user = User.builder()
                     .userId(UUID.randomUUID().toString())
                     .username(generateName())
                     .password(faker.internet().password())
-                    .role(Roles.ANALYST)
+                    .role(roles[faker.random().nextInt(roles.length)])
                     .build();
             userRepository.save(user);
         }
@@ -109,8 +108,6 @@ public class DataService {
                     .accountType(AccountType.values()[faker.random().nextInt(AccountType.values().length)])
                     .balance(faker.number().randomDouble(2, 1000, 100000))
                     .creationDate(faker.date().past(1000, TimeUnit.DAYS))
-                    .accountAge(faker.number().numberBetween(1, 120))
-                    .transactionFrequency(faker.number().numberBetween(1, 100))
                     .build();
             userAccountRepository.save(account);
         }
@@ -124,7 +121,7 @@ public class DataService {
                     .date(faker.date().past(365, TimeUnit.DAYS))
                     .amount(faker.number().randomDouble(2, 10, 10000))
                     .userAccount(accounts.get(faker.random().nextInt(accounts.size())))
-                    .status(Tstatus.values()[faker.random().nextInt(Tstatus.values().length)])
+                    .transactionType(TransactionType.values()[faker.random().nextInt(TransactionType.values().length)])
                     .location(generateCity())
                     .build();
             transactionRepository.save(transaction);
@@ -134,12 +131,13 @@ public class DataService {
     private void generateFraudAlerts(int count) {
         List<Transaction> transactions = transactionRepository.findAll();
         for (int i = 0; i < count; i++) {
+            Transaction transaction = transactions.get(faker.random().nextInt(transactions.size()));
             FraudAlert alert = FraudAlert.builder()
                     .alertId(UUID.randomUUID().toString())
-                    .transactionId(transactions.get(faker.random().nextInt(transactions.size())).getTransactionId())
+                    .transactionId(transaction.getTransactionId())
                     .alertDate(faker.date().past(365, TimeUnit.DAYS))
                     .fraudType(FraudType.values()[faker.random().nextInt(FraudType.values().length)])
-                    .status(Fstatus.values()[faker.random().nextInt(Fstatus.values().length)])
+                    .status(Tstatus.values()[faker.random().nextInt(Tstatus.values().length)])
                     .comments(generateFraudComment())
                     .build();
             fraudAlertRepository.save(alert);
@@ -147,10 +145,11 @@ public class DataService {
     }
 
     private void generateAuditLogs(int count) {
+        List<User> users = userRepository.findAll();
         for (int i = 0; i < count; i++) {
             AuditLog log = AuditLog.builder()
                     .logId(UUID.randomUUID().toString())
-                    .userId(UUID.randomUUID().toString()) // Replace with actual userId from User entities if necessary
+                    .userId(users.get(faker.random().nextInt(users.size())).getUserId())
                     .action(Action.values()[faker.random().nextInt(Action.values().length)])
                     .timestamp(faker.date().past(365, TimeUnit.DAYS))
                     .build();
