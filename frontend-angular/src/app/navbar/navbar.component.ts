@@ -22,6 +22,10 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getPendingFraudAlertsCount();
     this.updateDateTime();
+
+    this.fraudAlertService.analysingCount$.subscribe(count => {
+      this.pendingFraudAlertsCount = count;
+    });
   }
 
   ngAfterViewInit(): void {

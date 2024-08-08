@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import { FraudAlert } from '../models/fraud-alert.model';
 
 @Injectable({
@@ -9,7 +9,14 @@ import { FraudAlert } from '../models/fraud-alert.model';
 export class FraudAlertService {
   private apiUrl = 'http://localhost:8080/api/fraudAlerts';
 
+  private analysingCountSource = new BehaviorSubject<number>(0);
+  analysingCount$ = this.analysingCountSource.asObservable();
+
   constructor(private http: HttpClient) {}
+
+  updateAnalysingCount(count: number): void {
+    this.analysingCountSource.next(count);
+  }
 
   getAllFraudAlerts(): Observable<FraudAlert[]> {
     return this.http.get<FraudAlert[]>(this.apiUrl);
