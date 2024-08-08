@@ -23,7 +23,7 @@ public class FraudAlertServiceImpl implements FraudAlertService {
 
     @Override
     public FraudAlert getFraudAlertById(String id) {
-        return fraudAlertRepository.findById(id).orElse(null);
+        return fraudAlertRepository.findById(id).orElseThrow(() -> new RuntimeException("Fraud Alert not found"));
     }
 
     @Override
@@ -38,6 +38,9 @@ public class FraudAlertServiceImpl implements FraudAlertService {
 
     @Override
     public FraudAlert updateFraudAlert(FraudAlert fraudAlert) {
+        if (!fraudAlertRepository.existsById(fraudAlert.getAlertId())) {
+            throw new RuntimeException("Fraud Alert not found");
+        }
         return fraudAlertRepository.save(fraudAlert);
     }
 
@@ -64,5 +67,12 @@ public class FraudAlertServiceImpl implements FraudAlertService {
     @Override
     public List<FraudAlert> getFraudAlertsByStatus(Tstatus status) {
         return fraudAlertRepository.findByStatus(status);
+    }
+    @Override
+    public void updateFraudAlertStatusAndComments(String id, Tstatus status, String comments) {
+        FraudAlert fraudAlert = fraudAlertRepository.findById(id).orElseThrow(() -> new RuntimeException("Fraud Alert not found"));
+        fraudAlert.setStatus(status);
+        fraudAlert.setComments(comments);
+        fraudAlertRepository.save(fraudAlert);
     }
 }

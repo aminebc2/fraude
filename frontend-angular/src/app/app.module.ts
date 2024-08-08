@@ -17,6 +17,7 @@ import { FraudAlertsComponent } from './fraud-alerts/fraud-alerts.component';
 import { ClientsComponent } from './clients/clients.component';
 import { LogsComponent } from './logs/logs.component';
 import {FormsModule} from "@angular/forms";
+import {TransactionDetailsComponent} from "./transaction-details/transaction-details.component";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {FormsModule} from "@angular/forms";
     BreadcrumbComponent,
     FraudAlertsComponent,
     ClientsComponent,
-    LogsComponent
+    LogsComponent,
+    TransactionDetailsComponent
   ],
   imports: [
     BrowserModule,

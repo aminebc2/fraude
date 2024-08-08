@@ -1,5 +1,6 @@
 package ma.stage.fraude.controller;
 
+import ma.stage.fraude.DTO.UpdateFraudAlertRequest;
 import ma.stage.fraude.entities.FraudAlert;
 import ma.stage.fraude.enums.Tstatus;
 import ma.stage.fraude.services.FraudAlertService;
@@ -65,5 +66,9 @@ public class FraudAlertController {
     @GetMapping("/status/{status}")
     public List<FraudAlert> getFraudAlertsByStatus(@PathVariable Tstatus status) {
         return fraudAlertService.getFraudAlertsByStatus(status);
+    }
+    @PatchMapping("/{id}")
+    public void updateFraudAlertStatusAndComments(@PathVariable String id, @RequestBody UpdateFraudAlertRequest request) {
+        fraudAlertService.updateFraudAlertStatusAndComments(id, request.getStatus(), request.getComments());
     }
 }

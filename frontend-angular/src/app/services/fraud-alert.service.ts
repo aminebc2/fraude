@@ -31,6 +31,10 @@ export class FraudAlertService {
     return this.http.put<FraudAlert>(`${this.apiUrl}/${id}`, fraudAlert);
   }
 
+  updateFraudAlertStatusAndComments(id: string, status: string, comments: string): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${id}`, { status, comments });
+  }
+
   getTotalFraudAlertsCount(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/count/total`);
   }

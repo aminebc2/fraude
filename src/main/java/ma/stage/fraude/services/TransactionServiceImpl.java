@@ -23,7 +23,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Transaction getTransactionById(String id) {
-        return transactionRepository.findById(id).orElse(null);
+        return transactionRepository.findById(id).orElseThrow(() -> new RuntimeException("Transaction not found"));
     }
 
     @Override
@@ -38,6 +38,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Transaction updateTransaction(Transaction transaction) {
+        if (!transactionRepository.existsById(transaction.getTransactionId())) {
+            throw new RuntimeException("Transaction not found");
+        }
         return transactionRepository.save(transaction);
     }
 

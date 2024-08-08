@@ -1,3 +1,4 @@
+// clients.component.ts
 import { Component, HostListener, OnInit } from '@angular/core';
 import { UserAccountService } from '../services/user-account.service';
 import { UserAccount } from '../models/user-account.model';
@@ -5,6 +6,7 @@ import { TransactionService } from '../services/transaction.service';
 import * as XLSX from 'xlsx';
 import { DatePipe } from '@angular/common';
 import { Transaction } from '../models/transaction.model';
+import {ActivatedRoute, Router} from "@angular/router";
 
 interface TransactionCounts {
   [key: string]: number;
@@ -30,11 +32,15 @@ export class ClientsComponent implements OnInit {
   sortOrder: string = 'asc'; // or 'desc'
   dropdowns: { [key: string]: boolean } = {};
   isFilterDropdownOpen: boolean = false;
+  selectedAccount!: UserAccount;
+  showModal: boolean = false;
 
   constructor(
     private userAccountService: UserAccountService,
     private transactionService: TransactionService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -131,7 +137,8 @@ export class ClientsComponent implements OnInit {
   }
 
   viewDetails(account: UserAccount): void {
-    // Implement the logic to view account details
+    this.selectedAccount = account;
+    this.showModal = true;
   }
 
   exportAccounts(): void {
@@ -173,5 +180,12 @@ export class ClientsComponent implements OnInit {
 
   formatDate(date: string): string {
     return <string>this.datePipe.transform(date, 'dd/MM/yyyy');
+  }
+
+  closeModal(): void {
+    this.showModal = false;
+  }
+  viewTransactions(): void {
+    this.router.navigate(['/transaction', this.selectedAccount.accountId]);
   }
 }

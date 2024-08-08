@@ -14,6 +14,7 @@ export class FraudAlertsComponent implements OnInit {
   fraudAlerts: FraudAlert[] = [];
   transactions: { [key: string]: Transaction } = {};
   filteredAlerts: FraudAlert[] = [];
+  userAccount: any;
   searchTerm: string = '';
   fromTime: string = '';
   toTime: string = '';
@@ -50,8 +51,6 @@ export class FraudAlertsComponent implements OnInit {
     transactionType: '',
     location: ''
   };
-
-
 
   constructor(
     private fraudAlertService: FraudAlertService,
@@ -129,6 +128,15 @@ export class FraudAlertsComponent implements OnInit {
     return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
   }
 
+  formatDateS(date: string): string {
+    const d = new Date(date);
+    const day = d.getDate().toString().padStart(2, '0');
+    const month = (d.getMonth() + 1).toString().padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+
+
   exportAlerts(): void {
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.filteredAlerts);
     const date = new Date().toISOString().split('T')[0];
@@ -159,7 +167,7 @@ export class FraudAlertsComponent implements OnInit {
 
   updateAlert(): void {
     if (this.selectedAlert) {
-      this.fraudAlertService.updateFraudAlert(this.selectedAlert.alertId, this.selectedAlert).subscribe(() => {
+      this.fraudAlertService.updateFraudAlertStatusAndComments(this.selectedAlert.alertId, this.selectedAlert.status, this.selectedAlert.comments).subscribe(() => {
         this.loadFraudAlerts();
         this.closeUpdateModal();
       });
@@ -175,4 +183,6 @@ export class FraudAlertsComponent implements OnInit {
     }
     return 0;
   }
+
+  protected readonly Transaction = Transaction;
 }

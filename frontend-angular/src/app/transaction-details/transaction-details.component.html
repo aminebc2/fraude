@@ -1,0 +1,76 @@
+<!-- transaction-details.component.html -->
+<section class="bg-gray-50 p-3 sm:p-5">
+  <div class="mx-auto w-full px-4 lg:px-12">
+    <div class="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+      <div class="p-4 border-b">
+
+        <h3 class="text-2xl font-semibold text-gray-900">Détails du compte et transactions</h3>
+      </div>
+      <div class="p-4">
+        <div class="grid gap-4 mb-4 sm:grid-cols-2">
+          <div class="flex flex-col p-4 mb-4 text-base text-blue-800 rounded-lg bg-blue-50" role="alert">
+            <span class="font-medium">Informations sur le compte</span>
+            <ul class="mt-1.5 list-disc list-inside">
+              <li>Compte ID : <span class="font-medium">{{ account.accountId }}</span></li>
+              <li>Nom du Compte : <span class="font-medium">{{ account.accountName }}</span></li>
+              <li>Date de Création : <span class="font-medium">{{ formatDateS(account.creationDate) }}</span></li>
+              <li>Âge du Compte : <span class="font-medium">{{ account.accountAge }} Mois</span></li>
+              <li>Type de Compte : <span class="font-medium">{{ account.accountType }}</span></li>
+              <li>Balance Actuelle : <span class="font-medium">{{ account.balance | currency:' د.م ' }}</span></li>
+              <li>Nombre de Transactions : <span class="font-medium">{{ countTransactions() }}</span></li>
+              <li>Fréquence de Transaction : <span class="font-medium">{{ account.transactionFrequency }}</span></li>
+            </ul>
+          </div>
+        </div>
+        <h4 class="text-lg font-semibold text-gray-900 mb-2">Transactions</h4>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+              <th scope="col" class="px-4 py-3">Transaction ID</th>
+              <th scope="col" class="px-4 py-3">Date</th>
+              <th scope="col" class="px-4 py-3">Montant</th>
+              <th scope="col" class="px-4 py-3">Type</th>
+              <th scope="col" class="px-4 py-3">Location</th>
+              <th scope="col" class="px-4 py-3">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let transaction of transactions" class="border-b hover:bg-gray-100">
+              <td class="px-4 py-3">{{ transaction.transactionId }}</td>
+              <td class="px-4 py-3">{{ formatDate(transaction.date) }}</td>
+              <td class="px-4 py-3">{{ transaction.amount | currency:' د.م ' }}</td>
+              <td class="px-4 py-3">
+                  <span [ngClass]="{
+                    'bg-green-100 text-green-800': transaction.transactionType === 'DEPOSIT',
+                    'bg-blue-100 text-blue-800': transaction.transactionType === 'TRANSFER',
+                    'bg-yellow-100 text-yellow-800': transaction.transactionType === 'WITHDRAWAL'
+                  }" class="text-xs font-medium px-2 py-0.5 rounded">
+                    {{ transaction.transactionType }}
+                  </span>
+              </td>
+              <td class="px-4 py-3">{{ transaction.location }}</td>
+              <td class="px-4 py-3">
+                  <span [ngClass]="{
+                    'bg-green-100 text-green-800': getStatus(transaction.transactionId) === 'NORMAL',
+                    'bg-red-100 text-red-800': getStatus(transaction.transactionId) === 'FRAUDULENT',
+                    'bg-gray-100 text-gray-800': getStatus(transaction.transactionId) === 'ANALYZING'
+                  }" class="text-xs font-medium px-2 py-0.5 rounded">
+                    {{ getStatus(transaction.transactionId) }}
+                  </span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="flex items-center justify-start p-4 border-t border-gray-200">
+        <button (click)="goBack()" class="text-center inline-flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-8 py-2.5">
+          <svg class="mr-3 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+          </svg>
+          Retour</button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -16,4 +16,6 @@ public interface FraudAlertService {
     long getAnalysingFraudAlertsCount();
     long getFraudAlertsCount();
     List<FraudAlert> getFraudAlertsByStatus(Tstatus status);
+    void updateFraudAlertStatusAndComments(String id, Tstatus status, String comments);
+
 }
