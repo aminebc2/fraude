@@ -3,6 +3,8 @@ import { interval } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FraudAlertService } from "../services/fraud-alert.service";
 import Swal from 'sweetalert2';
+import {AuthService} from "../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +16,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   location: string = "Rabat, Morocco";
   dateTime: string = "";
 
-  constructor(private fraudAlertService: FraudAlertService) {
+  constructor(private fraudAlertService: FraudAlertService, protected authService: AuthService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -72,5 +74,11 @@ export class NavbarComponent implements OnInit, AfterViewInit {
       icon: "info",
       title: "Vous n'avez aucun nouveau message !"
     });
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+
   }
 }

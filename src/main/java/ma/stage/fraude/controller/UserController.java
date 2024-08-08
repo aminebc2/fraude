@@ -3,6 +3,7 @@ package ma.stage.fraude.controller;
 import ma.stage.fraude.entities.User;
 import ma.stage.fraude.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,4 +40,11 @@ public class UserController {
     public void deleteUser(@PathVariable String userId) {
         userService.deleteUser(userId);
     }
+
+
+    @GetMapping("/home")
+    public ResponseEntity<Void> home() {
+        return ResponseEntity.ok().build();
+    }
+
 }

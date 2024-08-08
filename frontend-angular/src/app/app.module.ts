@@ -18,6 +18,9 @@ import { ClientsComponent } from './clients/clients.component';
 import { LogsComponent } from './logs/logs.component';
 import {FormsModule} from "@angular/forms";
 import {TransactionDetailsComponent} from "./transaction-details/transaction-details.component";
+import { LoginComponent } from './login/login.component';
+import {AuthService} from "./services/auth.service";
+import {AuthGuard} from "./guard/auth.guard";
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import {TransactionDetailsComponent} from "./transaction-details/transaction-det
     FraudAlertsComponent,
     ClientsComponent,
     LogsComponent,
-    TransactionDetailsComponent
+    TransactionDetailsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,9 @@ import {TransactionDetailsComponent} from "./transaction-details/transaction-det
     AuditLogService,
     FraudAlertService,
     TransactionService,
-    UserAccountService
+    UserAccountService,
+    AuthService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
