@@ -30,17 +30,17 @@ public class DataService {
     @Autowired
     private AuditLogRepository auditLogRepository;
 
-    private Faker faker = new Faker();
+    private final Faker faker = new Faker();
 
     // Listes des noms marocains
-    private String[] prenomsMarocains = {
+    private final String[] prenomsMarocains = {
             "Mohamed", "Fatima", "Ahmed", "Amina", "Hassan", "Khadija", "Youssef", "Malika", "Rachid", "Nadia",
             "Saïd", "Mounia", "Taha", "Leila", "Soufiane", "Hajar", "Mustapha", "Imane", "Yassine", "Zineb",
             "Omar", "Rim", "Bilal", "Latifa", "Rayan", "Ikram", "Ali", "Rania", "Amine", "Salma",
             "Karim", "Ghizlane", "Abdelaziz", "Asmae", "Hamza", "Sara", "Samir", "Meryem", "Abdellah", "Noura"
     };
 
-    private String[] nomsMarocains = {
+    private final String[] nomsMarocains = {
             "El Idrissi", "Alaoui", "Bennani", "Fassi", "Haddad", "Amrani", "Sefrioui", "Qadiri", "Benjelloun", "Chraibi",
             "El Mansouri", "Taoufik", "Bouazza", "El Kabbaj", "Raji", "El Alami", "Mouhajir", "El Baz", "Bennis", "Jaafari",
             "El Guerrouj", "Moutawakel", "Lahlou", "El Kadiri", "Bourkia", "El Fassi", "El Hammouchi", "Harrouchi", "El Bahri", "Naciri",
@@ -48,14 +48,14 @@ public class DataService {
     };
 
     // Liste des villes marocaines
-    private String[] villesMarocaines = {
+    private final String[] villesMarocaines = {
             "Casablanca", "Rabat", "Fès", "Marrakech", "Agadir", "Tanger", "Meknès", "Oujda", "Tetouan", "Safi",
             "Salé", "El Jadida", "Nador", "Kenitra", "Khouribga", "Beni Mellal", "Ksar El Kebir", "Larache", "Khemisset", "Guelmim",
             "Taza", "Settat", "Ifrane", "Azrou", "Essaouira", "Chefchaouen", "Ouarzazate", "Errachidia", "Taroudant", "Al Hoceima"
     };
 
     // Exemples de commentaires et détails
-    private String[] commentairesFraude = {
+    private final String[] commentairesFraude = {
             "Transaction suspecte détectée à l'étranger",
             "Montant élevé retiré en une seule opération",
             "Multiples tentatives de connexion échouées",
@@ -78,12 +78,13 @@ public class DataService {
             "-"
     };
 
+
     @PostConstruct
     public void generateData() {
         generateUsers(10);
         generateAccounts(50);
         generateTransactions(300);
-        generateFraudAlerts(100);
+        generateFraudAlerts((int) faker.number().randomDouble(2, 100, 300));
         generateAuditLogs(30);
     }
 
@@ -130,19 +131,36 @@ public class DataService {
 
     private void generateFraudAlerts(int count) {
         List<Transaction> transactions = transactionRepository.findAll();
+
+        int fraudulentCount = (int) (count * 0.8123);
+        int analyzingCount = count - fraudulentCount;
+
         for (int i = 0; i < count; i++) {
             Transaction transaction = transactions.get(faker.random().nextInt(transactions.size()));
+            Tstatus status;
+
+            if (fraudulentCount > 0) {
+                status = Tstatus.FRAUDULENT;
+                fraudulentCount--;
+            } else if (analyzingCount > 0) {
+                status = Tstatus.ANALYZING;
+                analyzingCount--;
+            } else {
+                status = Tstatus.NORMAL;
+            }
+
             FraudAlert alert = FraudAlert.builder()
                     .alertId(UUID.randomUUID().toString())
                     .transactionId(transaction.getTransactionId())
                     .alertDate(faker.date().past(365, TimeUnit.DAYS))
                     .fraudType(FraudType.values()[faker.random().nextInt(FraudType.values().length)])
-                    .status(Tstatus.values()[faker.random().nextInt(Tstatus.values().length)])
+                    .status(status)
                     .comments(generateFraudComment())
                     .build();
             fraudAlertRepository.save(alert);
         }
     }
+
 
     private void generateAuditLogs(int count) {
         List<User> users = userRepository.findAll();

@@ -68,7 +68,7 @@ export class FraudAlertsComponent implements OnInit {
       this.normalCount = this.fraudAlerts.filter(alert => alert.status === 'NORMAL').length;
       this.fraudulentCount = this.fraudAlerts.filter(alert => alert.status === 'FRAUDULENT').length;
       this.analysingCount = this.fraudAlerts.filter(alert => alert.status === 'ANALYZING').length;
-      this.fraudAlertService.updateAnalysingCount(this.analysingCount); // Update the service with the new count
+      this.fraudAlertService.updateAnalysingCount(this.analysingCount);
       this.filteredAlerts = this.fraudAlerts;
       this.loadTransactions();
       this.updatePagination();
