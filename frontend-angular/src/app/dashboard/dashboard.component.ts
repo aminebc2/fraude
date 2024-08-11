@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import ApexCharts from 'apexcharts';
 import { FraudAlertService } from '../services/fraud-alert.service';
 import { TransactionService } from '../services/transaction.service';
 import { UserAccountService } from '../services/user-account.service';
 import { Transaction } from "../models/transaction.model";
 import { FraudAlert } from "../models/fraud-alert.model";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-dashboard',
@@ -493,5 +494,38 @@ export class DashboardComponent implements OnInit {
 
     const chart = new ApexCharts(document.getElementById('comparisonChart'), options);
     chart.render();
+  }
+
+  isDropdownOpen = false;
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    const target = event.target as HTMLElement;
+    const dropdownButton = document.getElementById('yearDropdownButton');
+    const dropdown = document.getElementById('yearDropdown');
+
+    if (dropdownButton && !dropdownButton.contains(target) && dropdown && !dropdown.contains(target)) {
+      this.isDropdownOpen = false;
+    }
+  }
+
+  selectYear(year: number) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-right",
+      timer: 5000,
+      timerProgressBar: true,
+      showConfirmButton: false
+    });
+    Toast.fire({
+      icon: "info",
+      title: "Aucune donnée disponible pour l'année " + year+ " !"
+    });
+
+    this.isDropdownOpen = false;
   }
 }
