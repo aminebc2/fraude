@@ -238,7 +238,7 @@ export class DashboardComponent implements OnInit {
     }[] => {
       return timeCategories.map(month => ({
         x: month,
-        y: Math.floor(Math.random() * (totalTransactionAmount - 3000 + 1)) + 3000,
+        y: Math.floor(Math.random() * (totalTransactionAmount - 900000 + 1)) + 3000,
       }));
     };
 
