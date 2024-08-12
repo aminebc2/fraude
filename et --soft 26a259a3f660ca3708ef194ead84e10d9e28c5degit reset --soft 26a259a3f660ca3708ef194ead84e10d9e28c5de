@@ -1,0 +1,137 @@
+[33mcommit 4a6bc4a78343b5384cbe29185f114a84485097a1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Mon Aug 12 01:44:45 2024 +0100
+
+    model ML
+
+[33mcommit f4cbf7ed3eb1aa8417be888a9809f02b6d5ab392[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Mon Aug 12 01:41:59 2024 +0100
+
+    model ML
+
+[33mcommit 5ed47d8e5793402b20353e1ee3963d14a60f5886[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Mon Aug 12 01:39:13 2024 +0100
+
+    fix model ML
+
+[33mcommit 26a259a3f660ca3708ef194ead84e10d9e28c5de[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Sun Aug 11 16:35:01 2024 +0100
+
+    Initilisation Model ML
+
+[33mcommit 21ed71cdc5dfee5c232581f0320b22405b799ba6[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Sun Aug 11 15:44:09 2024 +0100
+
+    add dashboard
+
+[33mcommit 814b91777597256c8bc98400451d6d1f89968909[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Sat Aug 10 23:14:12 2024 +0100
+
+    add dashboard
+
+[33mcommit 4c2a7f55eae41a34c2b46f4ffb14e93b0c71d36b[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Thu Aug 8 19:31:15 2024 +0100
+
+    fix synchronisation
+
+[33mcommit 0c847c20f6ea5d75e342d539bb6f458e1fa082c5[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Thu Aug 8 17:49:52 2024 +0100
+
+    add security | login
+
+[33mcommit 7df2507ae77f480a5e27afb7d0d892f46e186448[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Thu Aug 8 02:04:07 2024 +0100
+
+    fix frontend
+
+[33mcommit a7e0d847b9a74399cf7c4c93eaf180f750c03787[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Wed Aug 7 01:52:31 2024 +0100
+
+    fix
+
+[33mcommit 5d8f9826a1f299cc7a2b9f03a4a6d36a9c96a7a8[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Mon Aug 5 12:04:26 2024 +0100
+
+    fix search bar
+
+[33mcommit 8dc51c81c7e5c33ef5599d5381a2f05844a5755d[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Mon Aug 5 11:21:58 2024 +0100
+
+    add logs list
+
+[33mcommit 5ac82f814cda6c3cda139535160b521761781178[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Mon Aug 5 00:14:37 2024 +0100
+
+    fix clients list
+
+[33mcommit dbbe4211412785a40bd16c24db652f433510062e[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Sun Aug 4 17:45:20 2024 +0100
+
+    add clients list
+
+[33mcommit c81d51656423b3af53e0fe45ebee34957f4780f4[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Sun Aug 4 15:41:41 2024 +0100
+
+    navbar
+
+[33mcommit 6d08e9602a05bd71b2b9249d96121fd30067811f[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Sun Aug 4 00:02:16 2024 +0100
+
+    fix frontend services
+
+[33mcommit 810045588ed9df2b518a31b82a75bbcbc7950f9a[m
+Author: EL MOUADDIBE <elmouaddibezaid@gmail.com>
+Date:   Sat Aug 3 23:29:57 2024 +0100
+
+    fix errors | install Angular
+
+[33mcommit 924ba9cfb412972b3b20d96516f25717de08df18[m
+Author: aminebc2 <bichamohamedamine@gmail.com>
+Date:   Thu Aug 1 15:00:45 2024 +0100
+
+    fixservices
+
+[33mcommit 89f6bb8c957087580028d08ba6b5c5a77ad45694[m
+Author: aminebc2 <bichamohamedamine@gmail.com>
+Date:   Thu Aug 1 12:52:58 2024 +0100
+
+    Fix services
+
+[33mcommit 4a3d9e17d464da03a0a9ae9b939a041e662ca614[m
+Author: aminebc2 <bichamohamedamine@gmail.com>
+Date:   Thu Aug 1 11:52:59 2024 +0100
+
+    frontend
+
+[33mcommit 3af880ac2c60ba349ff6ef96ffc25f277e9d225a[m
+Author: aminebc2 <bichamohamedamine@gmail.com>
+Date:   Thu Aug 1 11:47:22 2024 +0100
+
+    first commit
+
+[33mcommit f2ef88756a4722702841e00229e35f4ee7c35547[m
+Author: aminebc2 <bichamohamedamine@gmail.com>
+Date:   Thu Aug 1 10:51:54 2024 +0100
+
+    modify services
+
+[33mcommit 0f2e20e08486c01b67c75447284189034b0ec72b[m
+Author: aminebc2 <bichamohamedamine@gmail.com>
+Date:   Thu Aug 1 10:23:30 2024 +0100
+
+    first commit
